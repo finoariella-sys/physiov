@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-base: #FFFFFF;
+    --navy: #0F1B2E;
+    --navy-dark: #0B1320;
+    --border: #E2E2E2;
+    --border-light: #EDEDED;
+    --text-primary: #0F1B2E;
+    --text-secondary: #4A5568;
+    --text-muted: #8A94A6;
+    /* Tiered sage green — deep → base → mid → pale → mist */
+    --sage-deep: #0A5C43;
+    --sage: #0E9A6B;
+    --sage-mid: #43A87F;
+    --sage-pale: #D9EEE3;
+    --sage-mist: #EFF7F2;
+    --cream-warm: #FAF6F0;
+    --bluegrey-soft: #F4F6F8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+/* === Corporate utilities === */
+.shadow-formal { box-shadow: 0 1px 3px rgba(15,27,46,0.06); }
+.section-border { border-bottom: 1px solid var(--border); }
+
+/* === Accent line under section headings — deep → mid gradient === */
+.accent-line {
+  display: block; width: 44px; height: 2px; border-radius: 2px;
+  background: linear-gradient(to right, var(--sage-deep), var(--sage-mid));
+  margin-top: 12px;
+}
+
+/* === Small badge / pill — pale → mist gradient, navy text (high contrast) === */
+.badge-pill {
+  display: inline-flex; align-items: center;
+  padding: 4px 12px; border-radius: 999px;
+  background: linear-gradient(to bottom, var(--sage-pale), var(--sage-mist));
+  border: 1px solid rgba(10,92,67,0.16);
+  color: var(--navy);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+}
+
+/* === Gradient divider line between sections — transparent → sage-grey → transparent === */
+.divider-gradient {
+  height: 1px; border: 0;
+  background: linear-gradient(to right, transparent, #C2D4C9 25%, #A9C6B6 50%, #C2D4C9 75%, transparent);
+}
+
+/* === Soft tiered shadows for CTA buttons === */
+.btn-shadow-navy { box-shadow: 0 6px 18px -6px rgba(15,27,46,0.45); }
+.btn-shadow-sage {
+  box-shadow:
+    0 8px 20px -8px rgba(10,92,67,0.55),
+    0 3px 8px -3px rgba(14,154,107,0.35);
+}
+.btn-shadow-light {
+  box-shadow:
+    0 8px 22px -8px rgba(255,255,255,0.28),
+    0 3px 10px -4px rgba(67,168,127,0.35);
+}
+
+/* === Slow drift for decorative ornaments === */
+@keyframes ornament-drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.ornament-drift { animation: ornament-drift 9s ease-in-out infinite; }
+
+/* === Scroll reveal === */
+.reveal {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  will-change: opacity, transform;
+}
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important; scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .ornament-drift { animation: none; }
+}
